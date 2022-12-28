@@ -8,9 +8,9 @@
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
-            "program": "vlc_router.py",
-            "console": "integratedTerminal",
-            "justMyCode": true
+            "module": "uvicorn",
+            "args": ["vlc_router:fapi","--reload", "--port", "8008"],
+            "cwd": "${workspaceFolder}"
         }
     ]
 }
