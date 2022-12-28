@@ -25,7 +25,7 @@ except Exception as e:
 ##########################################
 ### Start VLC
 ##########################################
-start_fresh_vlc(get_vlc_cmdline(config), config['VLC']['vlc_pid_filename'])
+start_fresh_vlc(get_vlc_cmdline(config), config['VLC']['pid_filename'])
 
 
 ##########################################
