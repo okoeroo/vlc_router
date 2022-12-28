@@ -9,7 +9,7 @@
             "type": "python",
             "request": "launch",
             "module": "uvicorn",
-            "args": ["vlc_router:fapi","--reload", "--port", "8008"],
+            "args": ["vlc_router_main:fapi","--reload", "--port", "8008"],
             "cwd": "${workspaceFolder}"
         }
     ]

@@ -7,7 +7,9 @@ from funcs.config import read_config, check_config, get_vlc_cmdline
 from routes.media_routes import media_router
 from routes.vlc_routes import vlc_router
 from funcs.process_handling import start_fresh_vlc
-import signal
+
+from httpx import AsyncClient
+
 
 ##########################################
 ### CONFIG
@@ -34,3 +36,10 @@ fapi = FastAPI()
 ## Adding routes
 fapi.include_router(media_router)
 fapi.include_router(vlc_router)
+
+## Global passing
+fapi.config = config
+
+## Global async http client
+client = AsyncClient()
+fapi.client = client

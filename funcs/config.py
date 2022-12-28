@@ -27,6 +27,14 @@ def check_config(config: configparser.ConfigParser) -> bool:
 
 
 def get_vlc_cmdline(config: configparser.ConfigParser) -> str:
-    vlc_exec = config["VLC"]["vlc_exec"]
-    vlc_params = config["VLC"]["vlc_params"]
-    return f"{vlc_exec} {vlc_params}"
+    return " ".join([
+                config["VLC"]["vlc_exec"],
+                "--intf http",
+                "--http-password",
+                config["VLC"]["vlc_http_password"],
+                "--http-host",
+                config["VLC"]["vlc_host"],
+                "--http-port",
+                config["VLC"]["vlc_port"],
+                config["VLC"]["vlc_params"]
+             ])

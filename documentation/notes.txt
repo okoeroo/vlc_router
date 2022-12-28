@@ -1,0 +1,47 @@
+# Agents:
+vlc --fullscreen udp://@:1234
+
+
+curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=in_play&input=/Users/okoeroo/Movies/samples/tearsofsteel/tears_of_steel_720p.mov"
+
+
+# Best
+vlc --prefetch-read-size=536870912 /Users/okoeroo/Movies/samples/tearsofsteel/tearsofsteel_4k.mov --sout='#standard{mux=ts,access=udp,dst=192.168.1.69:1234}' --intf http  --http-password testtest
+
+# optional
+vlc --prefetch-buffer-size=1048576 --prefetch-read-size=536870912 /Users/okoeroo/Movies/samples/tearsofsteel/tearsofsteel_4k.mov --sout='#standard{mux=ts,access=udp,dst=192.168.1.69:1234}' --intf http  --http-password testtest
+
+while true; do curl -u :testtest "http://127.0.0.1:8080/requests/status.json"; done
+
+
+curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=seek&val=0"
+curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=volume&val=100%"
+curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=pl_previous"
+curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=pl_next"
+
+curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=pl_stop"
+curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=pl_play"
+
+curl -u :testtest "http://127.0.0.1:8080/requests/playlist.json"
+
+
+vlc -vvv input_stream --sout '#duplicate{dst=standard{access=udp,mux=ts,url=192.168.1.12:1234},dst=standard{access=udp,mux=ts,url=192.168.1.69:1234}}'
+vlc --prefetch-read-size=536870912 /Users/okoeroo/Movies/samples/tearsofsteel/tearsofsteel_4k.mov --sout '#duplicate{dst=standard{access=udp,mux=ts,url=192.168.1.12:1234},dst=standard{access=udp,mux=ts,url=192.168.1.69:1234}}'
+
+
+vlc --prefetch-read-size=536870912 /Users/okoeroo/Movies/samples/tearsofsteel/tearsofsteel_4k.mov --intf http  --http-password testtest '#duplicate{dst=standard{access=udp,mux=ts,url=192.168.1.69:1234},dst=standard{access=udp,mux=ts,url=192.168.1.76:1234}}'
+
+
+
+vlc --prefetch-read-size=536870912 /Users/okoeroo/Movies/samples/tearsofsteel/tearsofsteel_4k.mov \
+    --intf http  --http-password testtest \
+    --sout='#duplicate{dst=standard{access=udp,mux=ts,dst=192.168.1.76:1234},dst=standard{access=udp,mux=ts,dst=192.168.1.69:1234},dst=standard{access=udp,mux=ts,dst=127.0.0.1:1234}}'
+
+
+
+curl -u :testtest "http://127.0.0.1:8080/requests/status.json?dir=/Users/okoeroo/Movies/"
+curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=in_play&input=/Users/okoeroo/Movies/samples/tearsofsteel/tears_of_steel_720p.mov"
+curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=in_play&input=/Users/okoeroo/Movies/samples/tearsofsteel/tears_of_steel_720p.mov&output=#std{access=udp, mux=ts, dst=127.0.0.1:1234}"
+curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=fullscreen"
+curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=pl_stop"
+curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=pl_play"
