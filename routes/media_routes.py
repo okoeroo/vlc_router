@@ -13,8 +13,6 @@ media_router = APIRouter(
 def route_list():
     session = vlc_router_main.fapi.Session_generator()
     medias = [m for m in session.query(Media).order_by(Media.id)]
-    print(medias)
-
     return medias
 
 
