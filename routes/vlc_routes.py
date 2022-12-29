@@ -76,7 +76,6 @@ def route_play():
 #def route_play(videoid: int = 0):
     para = {}
     para['command'] = "pl_pause"
-#    para['id'] = videoid
     return vlc_http_request('GET', para, "status.json")
 
 
@@ -85,16 +84,4 @@ def route_play():
 #def route_play(videoid: int = 0):
     para = {}
     para['command'] = "pl_stop"
-#    para['id'] = videoid
     return vlc_http_request('GET', para, "status.json")
-
-
-
-
-# curl -u :vlcrouter "http://127.0.0.1:9090/requests/status.json?command=in_play&input=/Users/okoeroo/Movies/samples/tearsofsteel/tears_of_steel_720p.mov
-
-# curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=pl_start"
-# curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=pl_stop"
-# curl -u :testtest "http://127.0.0.1:8080/requests/status.json?command=in_play&input=/Users/okoeroo/Movies/samples/tearsofsteel/tearsofsteel_4k.mov"
-
-# curl -u :vlcrouter "http://127.0.0.1:9009/requests/status.json?command=in_play&input=/Users/okoeroo/Movies/samples/tearsofsteel/tears_of_steel_720p.mov&output=#std{access=udp, mux=ts, dst=127.0.0.1:1234}"
