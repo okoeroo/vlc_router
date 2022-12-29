@@ -2,10 +2,8 @@ from typing import Union
 from fastapi import APIRouter
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
-
-import vlc_router_main
-
 import requests
+import vlc_router_main
 
 
 #let's create router
