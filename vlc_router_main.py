@@ -7,8 +7,8 @@ from funcs.config import read_config, check_config, get_vlc_cmdline
 from routes.media_routes import media_router
 from routes.vlc_routes import vlc_router
 from funcs.process_handling import start_fresh_vlc
-
-from httpx import AsyncClient
+from funcs.database import Base, engine
+from sqlalchemy.orm import sessionmaker
 
 
 ##########################################
@@ -20,6 +20,13 @@ try:
     check_config(config)
 except Exception as e:
     print(f"Error: failure in {config_file} file. {e}")
+
+##########################################
+### Fire up the database
+##########################################
+Base.metadata.create_all(bind=engine)
+Session_generator = sessionmaker()
+Session_generator.configure(bind=engine)
 
 
 ##########################################
@@ -39,7 +46,4 @@ fapi.include_router(vlc_router)
 
 ## Global passing
 fapi.config = config
-
-## Global async http client
-client = AsyncClient()
-fapi.client = client
+fapi.Session_generator = Session_generator

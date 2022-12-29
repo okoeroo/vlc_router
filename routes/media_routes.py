@@ -1,23 +1,32 @@
-"""
-This file represents all the routes to administer media
-"""
-
 from fastapi import APIRouter
+from models.media import Media, MovingData
+import vlc_router_main
 
-#let's create router
+
 media_router = APIRouter(
     prefix='/media',
     tags = ['media']
 )
 
+
 @media_router.get('/list')
 def route_list():
-    return "list"
+    session = vlc_router_main.fapi.Session_generator()
+    medias = [m for m in session.query(Media).order_by(Media.id)]
+    print(medias)
+
+    return medias
+
 
 @media_router.get('/add')
-def route_list():
-    return "list"
+def route_add(friendly: str, filepath: str):
+    session = vlc_router_main.fapi.Session_generator()
+    m = Media(friendly_name=friendly, filepath=filepath)    
+    session.add(m)
+    session.commit()
+    return str(m)
+
 
 @media_router.get('/remove')
-def route_list():
+def route_remove():
     return "list"
