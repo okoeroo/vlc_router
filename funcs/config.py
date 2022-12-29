@@ -1,6 +1,5 @@
 import configparser
 import os
-from os.path import isfile
 
 
 def read_config(filename: str) -> configparser.ConfigParser:
@@ -10,6 +9,14 @@ def read_config(filename: str) -> configparser.ConfigParser:
 
 
 def check_config(config: configparser.ConfigParser) -> bool:
+    # DATABASE
+    if not config.has_section("DATABASE"):
+        raise ValueError("No section \"DATABASE\" found.")
+
+    if 'exec' not in config["DATABASE"]:
+        raise ValueError("No key \"connection\" found.")
+
+    # VLC
     if not config.has_section("VLC"):
         raise ValueError("No section \"VLC\" found.")
 
@@ -39,3 +46,6 @@ def get_vlc_cmdline(config: configparser.ConfigParser) -> str:
                 config["VLC"]["params"],
                 config["VLC"]["sout"]
              ])
+
+def get_database_connection_string(config: configparser.ConfigParser) -> str:
+    return config["DATABASE"]["connection"]

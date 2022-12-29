@@ -1,14 +1,15 @@
 #/usr/bin/env python3
 
+# FastAPI
 from fastapi import FastAPI
-from funcs.config import read_config, check_config, get_vlc_cmdline
-
-# Import routers
 from routes.media_routes import media_router
 from routes.vlc_routes import vlc_router
+
+# Import functies
+from funcs.config import read_config, check_config, get_vlc_cmdline
 from funcs.process_handling import start_fresh_vlc
-from funcs.database import Base, engine
-from sqlalchemy.orm import sessionmaker
+
+from funcs.database import setup_database_engine_into_session_generator
 
 
 ##########################################
@@ -21,12 +22,11 @@ try:
 except Exception as e:
     print(f"Error: failure in {config_file} file. {e}")
 
+
 ##########################################
 ### Fire up the database
 ##########################################
-Base.metadata.create_all(bind=engine)
-Session_generator = sessionmaker()
-Session_generator.configure(bind=engine)
+Session_generator = setup_database_engine_into_session_generator(config)
 
 
 ##########################################
