@@ -1,5 +1,9 @@
-import os, signal, subprocess, psutil
+import os, signal, subprocess, psutil, enum
 
+
+def kill_proc(pid: int, sign: enum.IntEnum) -> None:
+    print(f"Sending signal {sign} to parent PID: {pid}")
+    os.kill(pid, sign)
 
 def start_fresh_vlc(vlc_cmdline: str, pid_filename: str) -> None:
     # Reading PID
@@ -24,6 +28,12 @@ def start_fresh_vlc(vlc_cmdline: str, pid_filename: str) -> None:
 
 
 def process_child_start(cmdline: str, start_new_session=False) -> subprocess.Popen: 
+    if cmdline is None or cmdline == "":
+        raise FileNotFoundError("cmdline is empty.")
+    
+    if not os.path.exists(cmdline.split()[0]):
+        raise FileNotFoundError("Executable not found.")
+
     sub_proc = subprocess.Popen(cmdline.split(), start_new_session=start_new_session)
     return sub_proc
 
