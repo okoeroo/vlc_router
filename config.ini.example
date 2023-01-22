@@ -1,6 +1,6 @@
 [VLC]
 pid_filename = /tmp/vlc.pid
-exec = /opt/homebrew/bin/vlc 
+exec = vlc 
 host_listen = 127.0.0.1
 host = 127.0.0.1
 port = 9090
